@@ -677,6 +677,15 @@ function decorateBlock(block) {
     blockWrapper.classList.add(`${shortBlockName}-wrapper`);
     const section = block.closest('.section');
     if (section) section.classList.add(`${shortBlockName}-container`);
+
+    var sectionEle = document.createElement('section');
+    Array.from(section.attributes).forEach(function(attribute) {
+      sectionEle.setAttribute(attribute.name, attribute.value);
+    });
+    while (section.firstChild) {
+      sectionEle.appendChild(section.firstChild);
+    }
+    section.parentNode.replaceChild(sectionEle, section);
   }
 }
 

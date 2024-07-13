@@ -1,10 +1,26 @@
+.columns-container.speed-is-green .default-content-wrapper {
+  color: green;
+}
+
+.columns-container .default-content-wrapper {
+  margin: 0;
+  padding-left: 5rem;
+  color: red;
+}
+
+
+
 .columns > div {
   display: flex;
   flex-direction: column;
 }
 
-.columns img {
+.speed-is-green .columns img {
   width: 100%;
+}
+
+.columns img {
+  width: 60%;
 }
 
 .columns > div > div {
@@ -15,8 +31,14 @@
   order: 0;
 }
 
+.speed-is-green .columns > div > .columns-img-col img {
+  left: 0;
+}
+
 .columns > div > .columns-img-col img {
   display: block;
+  left: 115px;
+  position: relative;
 }
 
 @media (width >= 900px) {
@@ -29,5 +51,6 @@
   .columns > div > div {
     flex: 1;
     order: unset;
+    font-size: 2.5rem;
   }
 }

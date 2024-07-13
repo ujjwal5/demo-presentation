@@ -11,6 +11,7 @@ import {
   waitForLCP,
   loadBlocks,
   loadCSS,
+  loadScript,
 } from './aem.js';
 
 const LCP_BLOCKS = []; // add your LCP blocks to the list
@@ -48,7 +49,7 @@ async function loadFonts() {
  */
 function buildAutoBlocks(main) {
   try {
-    buildHeroBlock(main);
+    // buildHeroBlock(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
@@ -69,6 +70,14 @@ export function decorateMain(main) {
   decorateBlocks(main);
 }
 
+function createArticleElement() {
+  const article = document.createElement('article');
+  article.id = 'webslides';
+  article.classList.add('horizontal');
+  // main.prepend(article);
+  return article;
+}
+
 /**
  * Loads everything needed to get to LCP.
  * @param {Element} doc The container element
@@ -78,6 +87,8 @@ async function loadEager(doc) {
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
   if (main) {
+    // createArticleElement(main);
+    const article = doc.querySelector('article');
     decorateMain(main);
     document.body.classList.add('appear');
     await waitForLCP(LCP_BLOCKS);
@@ -105,8 +116,8 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  // loadHeader(doc.querySelector('header'));
+  // loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
@@ -114,6 +125,16 @@ async function loadLazy(doc) {
   sampleRUM('lazy');
   sampleRUM.observe(main.querySelectorAll('div[data-block-name]'));
   sampleRUM.observe(main.querySelectorAll('picture > img'));
+
+  loadCSS(`${window.hlx.codeBasePath}/styles/webslides.css`);
+  loadScript(`${window.hlx.codeBasePath}/scripts/webslides.js`);
+  // const article = doc.querySelector('article');
+  const article = createArticleElement();
+  // put all children under main as children under article
+  while (main.firstChild) {
+    article.appendChild(main.firstChild);
+  }
+  main.appendChild(article);
 }
 
 /**
@@ -129,7 +150,12 @@ function loadDelayed() {
 async function loadPage() {
   await loadEager(document);
   await loadLazy(document);
+  // add setTimeout of 20ms
+  setTimeout(() => {
+    const ws = new WebSlides();
+  }, 50);
   loadDelayed();
 }
 
 loadPage();
+

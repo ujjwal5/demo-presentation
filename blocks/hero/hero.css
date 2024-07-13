@@ -7,9 +7,9 @@ main .hero-container {
 }
 
 .hero {
-  position: relative;
+  /* position: relative; */
   padding: 32px;
-  min-height: 300px;
+  /* min-height: 300px; */
 }
 
 .hero h1 {
@@ -17,6 +17,13 @@ main .hero-container {
   margin-left: auto;
   margin-right: auto;
   color: white;
+  font-size: 4.6rem;
+}
+
+/* Style for lines after <br> */
+.hero h1 br + * {
+  font-size: 2.8rem; /* Smaller font size for lines after <br> */
+  font-weight: normal; /* Optional: Reset font weight */
 }
 
 .hero picture {
