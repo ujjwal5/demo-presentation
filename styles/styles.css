@@ -206,6 +206,10 @@ main .section {
   padding: 64px 16px;
 }
 
+ul li:not(:last-child) {
+  margin-bottom: 25px; /* Adjust the value as needed */
+}
+
 @media (width >= 600px) {
   main .section {
     padding: 32px;
